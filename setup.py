@@ -3,7 +3,8 @@ from setuptools import setup
 setup(
     name='odbctools',
     version='0.1.0',
-    packages=['tests', 'odbcmanager'],
+    packages=['odbctools', 'odbctools.odbcmanager', 'odbctools.tests'],
+    install_requires=['pypyodbc'],
     url='https://github.com/N-C-C/odbctools',
     license='',
     author='Andrew Yatsko',
