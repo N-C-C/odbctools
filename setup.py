@@ -21,6 +21,7 @@ setup(
     url='https://github.com/N-C-C/odbctools',
     description='A set of tools to simplify connecting to and working with an ODBC data source',
     long_description=readme(),
+    include_package_data=True,
     keywords='odbc database data sql informix',
     classifiers=[
         'Development Status :: 4 - Beta',
