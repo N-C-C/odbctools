@@ -11,9 +11,6 @@ From PyPI ::
 
     $ pip install odbctools
 
-Dependencies
-------------
-* pypyodbc
 
 Use It
 ------
@@ -34,6 +31,10 @@ Code Example ::
         for result_dict in result_list:
             for col_name, col_data in result_dict.items():
                 print("{0}{1}".format(str(col_name).lust(25), col_data))
+
+Dependencies
+------------
+* pypyodbc
 
 Licence
 --------
