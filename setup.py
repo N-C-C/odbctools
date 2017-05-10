@@ -1,13 +1,33 @@
 from setuptools import setup
 
+
+def readme():
+    with open('README.rst') as file:
+        return file.read()
+
+
 setup(
     name='odbctools',
     version='0.1.0',
-    packages=['odbctools', 'odbctools.odbcmanager', 'odbctools.tests'],
-    install_requires=['pypyodbc'],
-    url='https://github.com/N-C-C/odbctools',
-    license='',
+    license='MIT',
     author='Andrew Yatsko',
     author_email='ayatsko@live.com',
-    description='A set of tools to simplify connecting to and working with an ODBC data source'
+    install_requires=['pypyodbc'],
+    packages=[
+        'odbctools',
+        'odbctools.odbcmanager',
+        'odbctools.tests'
+    ],
+    url='https://github.com/N-C-C/odbctools',
+    description='A set of tools to simplify connecting to and working with an ODBC data source',
+    long_description=readme(),
+    keywords='odbc database data sql informix',
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'License :: OSI Approved :: MIT License',
+        'Topic :: Database',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Programming Language :: Python',
+    ],
 )
