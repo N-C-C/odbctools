@@ -26,17 +26,17 @@ Code Example ::
     query_string = "Your query here"
     params = [p1, p2]
 
-    using OdbcManager() as datasource:
+    with OdbcManager() as datasource:
         result_list = datasource.get_dictionaries(query_string, params)
         for result_dict in result_list:
             for col_name, col_data in result_dict.items():
-                print("{0}{1}".format(str(col_name).lust(25), col_data))
+                print("{0}{1}".format(str(col_name).ljust(25), col_data))
 
 Dependencies
 ------------
 * pypyodbc
 
-Licence
+License
 --------
 MIT
 
