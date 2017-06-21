@@ -73,11 +73,12 @@ class OdbcManager:
         cur = self.__conn.cursor()
         cur.execute(query_string, params)
 
-        if not commit:
-            return False
-        elif not self.auto_commit:
-            return False
-        else:
+        if commit is None:
+            if self.auto_commit:
+                cur.commit()
+                return True
+        if commit:
             cur.commit()
             return True
+        return False
 
