@@ -1,14 +1,26 @@
+from collections import deque
+
 import pypyodbc as odbc
 import csv
 from configparser import ConfigParser
 
 
 class OdbcManager:
-    def __init__(self, auto_commit=False):
-        config = ConfigParser()
-        config.read('config.ini')
-        self.connection_name = config.get('odbc', 'DSN')
+    def __init__(self, auto_commit=False, dsn='', config_file='config.ini', config_section='odbc', config_key='DSN'):
+        if dsn:
+            self.connection_name = dsn
+        else:
+            self.connection_name = self.__get_dsn_config(config_file, config_key, config_section)
+
+        if not self.connection_name:
+            raise ConnectionError("Must specify DSN via ini file or in the dsn parameter.")
+
         self.auto_commit = auto_commit
+
+    def __get_dsn_config(self, config_file, config_key, config_section):
+        config = ConfigParser()
+        config.read(config_file)
+        return config.get(config_section, config_key)
 
     def __enter__(self):
         self.__conn = odbc.connect('DSN={0};'.format(self.connection_name),self.auto_commit)
@@ -29,6 +41,19 @@ class OdbcManager:
         for row in rows:
             result_list.append(dict(zip(header, row)))
         return result_list
+
+    def get_dictionaries_in_queue(self, query_string, params=None):
+        """
+        Queries data source, returns a queue (for appending speed)
+        :param query_string: The query to execute
+        :param params: Parameters to pass to query
+        :return: The result of the query as a deque of dictionaries
+        """
+        header, rows = self.query(query_string, params)
+        results = deque()
+        for row in rows:
+            results.append(dict(zip(header, row)))
+        return results
 
     def write_to_csv(self, file_path, query_string, params=None, delimiter=',', quotechar='"'):
         """
