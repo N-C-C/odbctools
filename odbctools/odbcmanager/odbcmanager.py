@@ -15,6 +15,7 @@ class OdbcManager:
         if not self.connection_name:
             raise ConnectionError("Must specify DSN via ini file or in the dsn parameter.")
 
+        self.__conn = odbc.Connection
         self.auto_commit = auto_commit
 
     def __get_dsn_config(self, config_file, config_key, config_section):
@@ -23,10 +24,22 @@ class OdbcManager:
         return config.get(config_section, config_key)
 
     def __enter__(self):
-        self.__conn = odbc.connect('DSN={0};'.format(self.connection_name),self.auto_commit)
+        self.open_connection()
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close_connection()
+
+    def open_connection(self):
+        """
+        Opens ODBC connection
+        """
+        self.__conn = odbc.connect('DSN={0};'.format(self.connection_name), self.auto_commit)
+
+    def close_connection(self):
+        """
+        Closes ODBC connection
+        """
         self.__conn.close()
 
     def get_dictionaries(self, query_string, params=None):
