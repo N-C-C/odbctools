@@ -1,2 +1,2 @@
 pypyodbc==1.3.4
-setuptools==35.0.0
+setuptools>=35.0.0
