@@ -32,3 +32,19 @@ class OdbcManagerTest(unittest.TestCase):
         with OdbcManager() as ds:
             result_set = ds.get_dictionaries(query_string, params)
             self.assertEqual(len(result_set), 100000)
+
+    def test_encapsulated_connection(self):
+        class Foo:
+            def __init__(self):
+                self.connection = OdbcManager(dsn='unity64')
+
+            def __enter__(self):
+                self.connection.open_connection()
+                return self
+
+            def __exit__(self, exc_type, exc_val, exc_tb):
+                self.connection.close_connection()
+
+        with Foo() as f:
+            data = f.connection.get_dictionaries('select top 1 * from people', list())
+        print(data)
