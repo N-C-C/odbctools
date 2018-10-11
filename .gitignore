@@ -41,3 +41,4 @@ wheels/
 # Project specific files
 test-out/
 *.ini
+venv/
