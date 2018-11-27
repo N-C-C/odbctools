@@ -68,20 +68,18 @@ class OdbcManager:
             results.append(dict(zip(header, row)))
         return results
 
-    def write_to_csv(self, file_path, query_string, params=None, delimiter=',', quotechar='"', quoting=True):
+    def write_to_csv(self, file_path, query_string, params=None, delimiter=',', quotechar='"', quoting=True, escapechar=None):
         """
-        Queries data source and writes results to file
-        :param file_path: Target output path
-        :param query_string: The query to execute
-        :param params: Parameters to pass to query
-        :param delimiter: Character to separate fields in output 
-        :param quotechar: Character to quote fields in output
-        :param quoting: True to quote False for no quoting
+        Queries data source and writes results to file :param file_path: Target output path :param query_string: The
+        query to execute :param params: Parameters to pass to query :param delimiter: Character to separate fields in
+        output :param quotechar: Character to quote fields in output :param quoting: True to quote False for no
+        quoting :param escapechar: if quoting is set to QUOTE_NONE and escapechar is not set, the writer will raise
+        Error if any characters that require escaping are encountered. Per docs.python.org documentation for CSV.
         """
         header, rows = self.query(query_string, params)
         quoting = csv.QUOTE_ALL if quoting else csv.QUOTE_NONE
         with open(file_path, 'w', newline='') as csv_file:
-            wr = csv.writer(csv_file, delimiter=delimiter, quotechar=quotechar, quoting=quoting)
+            wr = csv.writer(csv_file, delimiter=delimiter, quotechar=quotechar, quoting=quoting, escapechar=escapechar)
             wr.writerow(header)
             wr.writerows(rows)
 
