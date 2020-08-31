@@ -6,9 +6,12 @@ from configparser import ConfigParser
 
 
 class OdbcManager:
-    def __init__(self, auto_commit=False, dsn='', config_file='config.ini', config_section='odbc', config_key='DSN'):
+    def __init__(self, auto_commit=False, dsn='', connection_string='', config_file='config.ini', config_section='odbc', config_key='DSN'):
+        self.connection_name = None
         if dsn:
-            self.connection_name = dsn
+            self.connection_name = 'DSN={0}'.format(dsn)
+        elif connection_string:
+            self.connection_name = connection_string
         else:
             self.connection_name = self.__get_dsn_config(config_file, config_key, config_section)
 
@@ -34,7 +37,8 @@ class OdbcManager:
         """
         Opens ODBC connection
         """
-        self.__conn = odbc.connect('DSN={0};'.format(self.connection_name), self.auto_commit)
+        if self.connection_name:
+            self.__conn = odbc.connect(self.connection_name, self.auto_commit)
 
     def close_connection(self):
         """

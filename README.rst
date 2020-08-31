@@ -63,6 +63,8 @@ Encapsulating the connection in your classes is also possible ::
         with Foo() as f:
             data = f.connection.get_dictionaries('select top 1 * from people', list())
 
+*Note: You can now create a OdbcManager object with a connection string, passing in the connection_string argument.*
+
 Returning data from a query
 ---------------------------
 **query** - Returns list that contains [0]A list containing the query columns [1:] A list of the resulting data (rows)

@@ -8,7 +8,7 @@ def readme():
 
 setup(
     name='odbctools',
-    version='0.5.1',
+    version='0.6.0',
     license='MIT',
     author='Andrew Yatsko',
     author_email='ayatsko@live.com',
