@@ -72,7 +72,7 @@ class OdbcManager:
             results.append(dict(zip(header, row)))
         return results
 
-    def write_to_csv(self, file_path, query_string, params=None, delimiter=',', quotechar='"', quoting=True, escapechar=None):
+    def write_to_csv(self, file_path, query_string, params=None, delimiter=',', quotechar='"', quoting=True, escapechar=None, csv_quoting=None):
         """
         Queries data source and writes results to file :param file_path: Target output path :param query_string: The
         query to execute :param params: Parameters to pass to query :param delimiter: Character to separate fields in
@@ -82,6 +82,7 @@ class OdbcManager:
         """
         header, rows = self.query(query_string, params)
         quoting = csv.QUOTE_ALL if quoting else csv.QUOTE_NONE
+        quoting = csv_quoting if csv_quoting else quoting
         with open(file_path, 'w', newline='') as csv_file:
             wr = csv.writer(csv_file, delimiter=delimiter, quotechar=quotechar, quoting=quoting, escapechar=escapechar)
             wr.writerow(header)
