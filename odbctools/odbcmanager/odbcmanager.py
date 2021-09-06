@@ -1,6 +1,6 @@
 from collections import deque
 
-import pypyodbc as odbc
+import odbctools.odbcmanager.pypyodbc as odbc
 import csv
 from configparser import ConfigParser
 

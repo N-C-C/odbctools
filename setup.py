@@ -8,11 +8,10 @@ def readme():
 
 setup(
     name='odbctools',
-    version='0.6.4',
+    version='0.7.0',
     license='MIT',
     author='Andrew Yatsko',
     author_email='ayatsko@live.com',
-    install_requires=['pypyodbc'],
     packages=[
         'odbctools',
         'odbctools.odbcmanager',

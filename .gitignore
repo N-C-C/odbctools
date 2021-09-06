@@ -42,3 +42,5 @@ wheels/
 test-out/
 *.ini
 venv/
+/test_database.laccdb
+/test_database.mdb
